@@ -45,15 +45,12 @@ const DESCRIPTIONS = [
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const createComment = () => {
-  const randomAvatar = getRandomInteger(1, 6);
-  return {
-    id: idDescription,
-    avatar: `img/avatar-${randomAvatar}.svg`,
-    message: getRandomArrayElement(MESSAGES),
-    name: getRandomArrayElement(NAMES)
-  };
-};
+const createComment = () => ({
+  id: idDescription,
+  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+  message: getRandomArrayElement(MESSAGES),
+  name: getRandomArrayElement(NAMES)
+});
 
 const createPhotoDescription = () => {
   idDescription++;
@@ -65,3 +62,6 @@ const createPhotoDescription = () => {
     comments: createComment()
   };
 };
+
+const photoDescriptions = Array.from({length: PHOTO_DESCRIPTION_COUNT}, createPhotoDescription);
+throw photoDescriptions;
