@@ -42,3 +42,26 @@ const DESCRIPTIONS = [
   'Красота',
   'На чиле'
 ];
+
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+
+const createComment = () => {
+  const randomAvatar = getRandomInteger(1, 6);
+  return {
+    id: idDescription,
+    avatar: `img/avatar-${randomAvatar}.svg`,
+    message: getRandomArrayElement(MESSAGES),
+    name: getRandomArrayElement(NAMES)
+  };
+};
+
+const createPhotoDescription = () => {
+  idDescription++;
+  return {
+    id: idDescription,
+    url: `photos/${idDescription}.jpg`,
+    description: getRandomArrayElement(DESCRIPTIONS),
+    likes: getRandomInteger(15, 200),
+    comments: createComment()
+  };
+};
