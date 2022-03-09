@@ -2,7 +2,7 @@ import {getRandomInteger, getRandomArrayElement} from './util.js';
 import {PHOTO_DESCRIPTION_COUNT, MIN_VALUE_OF_LIKES, MAX_VALUE_OF_LIKES, MIN_VALUE_AVATAR, MAX_VALUE_AVATAR, MAX_VALUE_OF_COMMENTS} from './const.js';
 
 let idDescription = 0;
-let idComment = 0;
+let idComment = 1;
 
 const NAMES = [
   'Анатолий',
@@ -49,7 +49,7 @@ const createPhotoDescription = () => {
     url: `photos/${idDescription}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomInteger(MIN_VALUE_OF_LIKES, MAX_VALUE_OF_LIKES),
-    comments: Array.from({length: MAX_VALUE_OF_COMMENTS}, createComment)
+    comments: Array.from({length: getRandomInteger(1, MAX_VALUE_OF_COMMENTS)}, createComment)
   };
 };
 
