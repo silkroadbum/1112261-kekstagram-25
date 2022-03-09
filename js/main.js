@@ -1,4 +1,4 @@
 import './util.js';
-import {createPhotoDescriptions} from './data.js';
-
-createPhotoDescriptions();
+import './miniature.js';
+import './data.js';
+import './const.js';

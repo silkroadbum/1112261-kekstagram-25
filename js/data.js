@@ -1,12 +1,8 @@
 import {getRandomInteger, getRandomArrayElement} from './util.js';
+import {PHOTO_DESCRIPTION_COUNT, MIN_VALUE_OF_LIKES, MAX_VALUE_OF_LIKES, MIN_VALUE_AVATAR, MAX_VALUE_AVATAR, MAX_VALUE_OF_COMMENTS} from './const.js';
 
 let idDescription = 0;
-
-const PHOTO_DESCRIPTION_COUNT = 25;
-const MIN_VALUE_OF_LIKES = 15;
-const MAX_VALUE_OF_LIKES = 200;
-const MIN_VALUE_AVATAR = 1;
-const MAX_VALUE_AVATAR = 6;
+let idComment = 1;
 
 const NAMES = [
   'Анатолий',
@@ -40,7 +36,7 @@ const DESCRIPTIONS = [
 ];
 
 const createComment = () => ({
-  id: idDescription,
+  id: idComment++,
   avatar: `img/avatar-${getRandomInteger(MIN_VALUE_AVATAR, MAX_VALUE_AVATAR)}.svg`,
   message: getRandomArrayElement(MESSAGES),
   name: getRandomArrayElement(NAMES)
@@ -53,7 +49,7 @@ const createPhotoDescription = () => {
     url: `photos/${idDescription}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomInteger(MIN_VALUE_OF_LIKES, MAX_VALUE_OF_LIKES),
-    comments: createComment()
+    comments: Array.from({length: getRandomInteger(1, MAX_VALUE_OF_COMMENTS)}, createComment)
   };
 };
 
