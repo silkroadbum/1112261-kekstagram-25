@@ -1,4 +1,5 @@
 import {createPhotoDescriptions} from './data.js';
+import {showFullPhoto} from './modal.js';
 
 const picturesBlock = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -10,6 +11,7 @@ pictures.forEach((picture) => {
   pictureElement.querySelector('img').src = picture.url;
   pictureElement.querySelector('.picture__likes').textContent = picture.likes;
   pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
+  showFullPhoto(pictureElement, picture);
   pictureListFragment.appendChild(pictureElement);
 });
 
