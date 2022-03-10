@@ -1,6 +1,6 @@
 const modalWindow = document.querySelector('.big-picture');
 const closeButton = modalWindow.querySelector('.cancel');
-modalWindow.classList.remove('hidden');
+
 
 closeButton.addEventListener('click', () => {
   modalWindow.classList.add('hidden');
@@ -11,3 +11,11 @@ document.addEventListener('keydown', (evt) => {
     modalWindow.classList.add('hidden');
   }
 });
+
+const showFullPhoto = (miniature) => {
+  miniature.addEventListener('click', () => {
+    modalWindow.classList.remove('hidden');
+  });
+};
+
+export {showFullPhoto};
