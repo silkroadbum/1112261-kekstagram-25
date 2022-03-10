@@ -11,7 +11,7 @@ pictures.forEach((picture) => {
   pictureElement.querySelector('img').src = picture.url;
   pictureElement.querySelector('.picture__likes').textContent = picture.likes;
   pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
-  showFullPhoto(pictureElement);
+  showFullPhoto(pictureElement, picture);
   pictureListFragment.appendChild(pictureElement);
 });
 
