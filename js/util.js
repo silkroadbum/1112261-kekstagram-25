@@ -7,4 +7,11 @@ const checkStringLength = (testString, maxLength) => testString.length <= maxLen
 //Функция получения рандомного элемента из массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-export {getRandomInteger, checkStringLength, getRandomArrayElement};
+//Функция создания элемента с необходимым классом
+const makeElement = (tagName, className) => {
+  const element = document.createElement(tagName);
+  element.classList.add(className);
+  return element;
+};
+
+export {getRandomInteger, checkStringLength, getRandomArrayElement, makeElement};

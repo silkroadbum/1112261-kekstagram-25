@@ -1,3 +1,5 @@
+import {makeElement} from './util.js';
+
 const modalWindow = document.querySelector('.big-picture');
 const closeButton = modalWindow.querySelector('.cancel');
 const socialCommentCount = modalWindow.querySelector('.social__comment-count');
@@ -18,13 +20,7 @@ document.addEventListener('keydown', (evt) => {
   }
 });
 
-const makeElement = (tagName, className) => {
-  const element = document.createElement(tagName);
-  element.classList.add(className);
-  return element;
-};
-
-const createComment = () => {
+const createNewComment = () => {
   const comment = makeElement('li', 'social__comment');
   const avatar = makeElement('img', 'social__picture');
   avatar.style.width = '35';
@@ -46,7 +42,7 @@ const showFullPhoto = (miniature, pictureElement) => {
     commentCount.textContent = pictureElement.comments.length;
     descriptionFullPhoto.textContent = pictureElement.description;
     for (let i = 0; i < pictureElement.comments.length; i++) {
-      const newComment = createComment();
+      const newComment = createNewComment();
       newComment.querySelector('.social__picture').src = pictureElement.comments[i].avatar;
       newComment.querySelector('.social__text').textContent = pictureElement.comments[i].message;
       commentsList.appendChild(newComment);
