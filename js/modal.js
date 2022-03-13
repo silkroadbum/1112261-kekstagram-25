@@ -10,6 +10,7 @@ const likesCount = modalWindow.querySelector('.likes-count');
 const commentCount = socialCommentCount.querySelector('.comments-count');
 const descriptionFullPhoto = modalWindow.querySelector('.social__caption');
 const commentsList = document.querySelector('.social__comments');
+const commentsListFragment = document.createDocumentFragment();
 
 closeButton.addEventListener('click', () => {
   modalWindow.classList.add('hidden');
@@ -50,8 +51,9 @@ const showFullPhoto = (miniature, pictureElement) => {
       const newComment = createNewComment();
       newComment.querySelector('.social__picture').src = pictureElement.comments[i].avatar;
       newComment.querySelector('.social__text').textContent = pictureElement.comments[i].message;
-      commentsList.appendChild(newComment);
+      commentsListFragment.appendChild(newComment);
     }
+    commentsList.appendChild(commentsListFragment);
   });
 };
 
