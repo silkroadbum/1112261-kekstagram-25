@@ -13,11 +13,13 @@ const commentsList = document.querySelector('.social__comments');
 
 closeButton.addEventListener('click', () => {
   modalWindow.classList.add('hidden');
+  document.body.classList.remove('modal-open');
 });
 
 document.addEventListener('keydown', (evt) => {
   if (evt.keyCode === ESC_KEY) {
     modalWindow.classList.add('hidden');
+    document.body.classList.remove('modal-open');
     document.removeEventListener('keydown');
   }
 });
@@ -40,6 +42,7 @@ const showFullPhoto = (miniature, pictureElement) => {
     commentLoader.classList.add('hidden');
     document.body.classList.add('modal-open');
     bigPicture.querySelector('img').src = pictureElement.url;
+    bigPicture.querySelector('img').alt = pictureElement.description;
     likesCount.textContent = String(pictureElement.likes);
     commentCount.textContent = String(pictureElement.comments.length);
     descriptionFullPhoto.textContent = pictureElement.description;
