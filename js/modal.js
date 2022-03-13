@@ -1,5 +1,5 @@
 import {makeElement} from './util.js';
-import {ESC_KEY, WIDTH_AVATAR, HEIGHT_AVATAR} from './const.js';
+import {WIDTH_AVATAR, HEIGHT_AVATAR} from './const.js';
 
 const modalWindow = document.querySelector('.big-picture');
 const closeButton = modalWindow.querySelector('.cancel');
@@ -18,7 +18,8 @@ closeButton.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', (evt) => {
-  if (evt.keyCode === ESC_KEY) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
     modalWindow.classList.add('hidden');
     document.body.classList.remove('modal-open');
     document.removeEventListener('keydown');
