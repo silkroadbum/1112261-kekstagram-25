@@ -14,4 +14,7 @@ const makeElement = (tagName, className) => {
   return element;
 };
 
-export {getRandomInteger, checkStringLength, getRandomArrayElement, makeElement};
+//Функция проверяющая нажата ли клавиша ESC
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomInteger, checkStringLength, getRandomArrayElement, makeElement, isEscapeKey};
