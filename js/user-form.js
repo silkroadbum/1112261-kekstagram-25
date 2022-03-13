@@ -1,8 +1,16 @@
-const formDownloadNewPicture = document.querySelector('.img-upload__form');
+const formDownloadPicture = document.querySelector('.img-upload__form');
+const buttonUploadFile = document.querySelector('#upload-file');
+const formEditImage = document.querySelector('.img-upload__overlay');
+const buttonCloseFormEdit = document.querySelector('#upload-cancel');
 
-const pristine = new Pristine(formDownloadNewPicture);
+buttonUploadFile.addEventListener('change', () => {
+  formEditImage.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+});
 
-formDownloadNewPicture.addEventListener('submit', (evt) => {
+const pristine = new Pristine(formDownloadPicture);
+
+formDownloadPicture.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   const isValid = pristine.validate();
