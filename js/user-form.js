@@ -1,12 +1,14 @@
 import {isEscapeKey} from './util.js';
+import {REG_EXP_SPACES, MAX_LENGTH_COMMENT} from './const.js';
+import {checkCountHashtags, checkUniqueHashtags, validateHashtag} from './check-hashtags.js';
 
 const formDownloadPicture = document.querySelector('.img-upload__form');
 const buttonUploadFile = document.querySelector('#upload-file');
 const formEditImage = document.querySelector('.img-upload__overlay');
 const buttonCloseFormEdit = document.querySelector('#upload-cancel');
-// const buttonSubmitForm = formDownloadPicture.querySelector('img-upload__submit');
-const hashtagValue = formDownloadPicture.querySelector('.text__hashtags');
-const commentValue = formDownloadPicture.querySelector('.text__description');
+const buttonSubmitForm = formDownloadPicture.querySelector('.img-upload__submit');
+const hashtagsInput = formDownloadPicture.querySelector('.text__hashtags');
+const commentInput = formDownloadPicture.querySelector('.text__description');
 
 const onFormEditEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -38,38 +40,44 @@ function removeListenerKeydownEsc () {
   document.removeEventListener('keydown', onFormEditEscKeydown);
 }
 
-hashtagValue.addEventListener('focus', removeListenerKeydownEsc);
-hashtagValue.addEventListener('blur', addListenerKeydownEsc);
+hashtagsInput.addEventListener('focus', removeListenerKeydownEsc);
+hashtagsInput.addEventListener('blur', addListenerKeydownEsc);
 
-commentValue.addEventListener('focus', removeListenerKeydownEsc);
-commentValue.addEventListener('blur', addListenerKeydownEsc);
+commentInput.addEventListener('focus', removeListenerKeydownEsc);
+commentInput.addEventListener('blur', addListenerKeydownEsc);
 
-const pristine = new Pristine(formDownloadPicture);
-
-formDownloadPicture.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
-  pristine.validate();
-});
-
-const checkHashtag = () => {
-  let isValidHashtag = true;
-  hashtagValue.addEventListener('input', () => {
-    const arrHashtag = hashtagValue.value.split(' ');
-    if (arrHashtag.lengt > 5) {
-      isValidHashtag = false;
-    } else if (arrHashtag.lengt <= 5 && arrHashtag.lengt >= 1){
-      arrHashtag.forEach((hashtag) => {
-        const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}/;
-        if (!re.test(hashtag)) {
-          isValidHashtag = false;
-        } else {
-          isValidHashtag = true;
-        }
-      });
-    }
-  });
-  return isValidHashtag;
+const validateComment = (value) => {
+  if (value.length <= MAX_LENGTH_COMMENT) {
+    buttonSubmitForm.disabled = false;
+    return true;
+  }
+  buttonSubmitForm.disabled = true;
+  return false;
 };
 
-checkHashtag();
+const pristine = new Pristine(formDownloadPicture, {
+  classTo: 'validate__item',
+  errorTextParent: 'validate__item',
+  errorTextTag: 'div',
+  errorTextClass: 'form__error'
+});
+
+pristine.addValidator(hashtagsInput, checkHashtags, 'Hashtag error!');
+pristine.addValidator(commentInput, validateComment, 'Не больше 140 символов!');
+
+function checkHashtags (hashtagsString) {
+  if (!hashtagsString) {
+    return true;
+  }
+  hashtagsString = hashtagsString.replace(REG_EXP_SPACES, ' ').trim();
+  const strToLowerCase = hashtagsString.toLowerCase();
+  const hashtags = strToLowerCase.split(' ');
+  if (checkCountHashtags(hashtags)
+    && checkUniqueHashtags(hashtags)
+    && validateHashtag(hashtags)) {
+    buttonSubmitForm.disabled = false;
+    return true;
+  }
+  buttonSubmitForm.disabled = true;
+  return false;
+}
