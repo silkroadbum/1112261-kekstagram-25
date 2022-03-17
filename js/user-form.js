@@ -21,6 +21,8 @@ function closeFormEdit () {
   document.body.classList.remove('modal-open');
   removeListenerKeydownEsc();
   buttonUploadFile.value = '';
+  hashtagsInput.value = '';
+  commentInput.value = '';
   buttonCloseFormEdit.removeEventListener('click', closeFormEdit);
 }
 
