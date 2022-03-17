@@ -70,4 +70,9 @@ const pristine = new Pristine(formDownloadPicture, {
 pristine.addValidator(hashtagsInput, checkHashtags, 'Hashtag error!');
 pristine.addValidator(commentInput, validateComment, 'Не больше 140 символов!');
 
-
+formDownloadPicture.addEventListener('submit', (evt) => {
+  const isValid = pristine.validate();
+  if (!isValid) {
+    evt.preventDefault();
+  }
+});
