@@ -1,4 +1,4 @@
-import {REG_EXP_HASHTAG, MAX_LENGTH_COUNT_HASHTAGS} from './const.js';
+import {REG_EXP_HASHTAG, MAX_LENGTH_COUNT_HASHTAGS, MAX_LENGTH_COMMENT} from './const.js';
 
 const checkCountHashtags =  (array) => array.length <= MAX_LENGTH_COUNT_HASHTAGS;
 
@@ -21,7 +21,9 @@ const validateHashtag = (array) => {
   return true;
 };
 
-export {checkCountHashtags, checkUniqueHashtags, validateHashtag};
+const validateComment = (value) => value.length <= MAX_LENGTH_COMMENT;
+
+export {checkCountHashtags, checkUniqueHashtags, validateHashtag, validateComment};
 
 // хэш-тег начинается с символа # (решётка);
 // строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;
