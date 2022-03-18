@@ -1,5 +1,5 @@
-import {makeElement} from './util.js';
-import {ESC_KEY, WIDTH_AVATAR, HEIGHT_AVATAR} from './const.js';
+import {makeElement, isEscapeKey, isEnterKey} from './util.js';
+import {WIDTH_AVATAR, HEIGHT_AVATAR} from './const.js';
 
 const modalWindow = document.querySelector('.big-picture');
 const closeButton = modalWindow.querySelector('.cancel');
@@ -10,15 +10,28 @@ const likesCount = modalWindow.querySelector('.likes-count');
 const commentCount = socialCommentCount.querySelector('.comments-count');
 const descriptionFullPhoto = modalWindow.querySelector('.social__caption');
 const commentsList = document.querySelector('.social__comments');
+const commentsListFragment = document.createDocumentFragment();
+
+const onModalEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeModalWindow();
+  }
+};
+
+function closeModalWindow () {
+  modalWindow.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onModalEscKeydown);
+}
 
 closeButton.addEventListener('click', () => {
-  modalWindow.classList.add('hidden');
+  closeModalWindow();
 });
 
-document.addEventListener('keydown', (evt) => {
-  if (evt.keyCode === ESC_KEY) {
-    modalWindow.classList.add('hidden');
-    document.removeEventListener('keydown');
+closeButton.addEventListener('keydown', (evt) => {
+  if (isEnterKey(evt)) {
+    closeModalWindow();
   }
 });
 
@@ -40,6 +53,7 @@ const showFullPhoto = (miniature, pictureElement) => {
     commentLoader.classList.add('hidden');
     document.body.classList.add('modal-open');
     bigPicture.querySelector('img').src = pictureElement.url;
+    bigPicture.querySelector('img').alt = pictureElement.description;
     likesCount.textContent = String(pictureElement.likes);
     commentCount.textContent = String(pictureElement.comments.length);
     descriptionFullPhoto.textContent = pictureElement.description;
@@ -47,8 +61,10 @@ const showFullPhoto = (miniature, pictureElement) => {
       const newComment = createNewComment();
       newComment.querySelector('.social__picture').src = pictureElement.comments[i].avatar;
       newComment.querySelector('.social__text').textContent = pictureElement.comments[i].message;
-      commentsList.appendChild(newComment);
+      commentsListFragment.appendChild(newComment);
     }
+    commentsList.appendChild(commentsListFragment);
+    document.addEventListener('keydown', onModalEscKeydown);
   });
 };
 

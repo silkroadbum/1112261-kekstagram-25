@@ -9,8 +9,9 @@ const pictureListFragment = document.createDocumentFragment();
 pictures.forEach((picture) => {
   const pictureElement = pictureTemplate.cloneNode(true);
   pictureElement.querySelector('img').src = picture.url;
-  pictureElement.querySelector('.picture__likes').textContent = picture.likes;
-  pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
+  pictureElement.querySelector('img').alt = picture.description;
+  pictureElement.querySelector('.picture__likes').textContent = String(picture.likes);
+  pictureElement.querySelector('.picture__comments').textContent = String(picture.comments.length);
   showFullPhoto(pictureElement, picture);
   pictureListFragment.appendChild(pictureElement);
 });
