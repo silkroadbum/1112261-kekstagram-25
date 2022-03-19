@@ -1,6 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {REG_EXP_SPACES} from './const.js';
 import {checkCountHashtags, checkUniqueHashtags, validateHashtag, validateComment} from './check-hashtags-comment.js';
+import './scale-image.js';
 
 const formDownloadPicture = document.querySelector('.img-upload__form');
 const buttonUploadFile = document.querySelector('#upload-file');
