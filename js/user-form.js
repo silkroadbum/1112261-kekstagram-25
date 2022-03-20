@@ -1,6 +1,8 @@
 import {isEscapeKey} from './util.js';
 import {REG_EXP_SPACES} from './const.js';
 import {checkCountHashtags, checkUniqueHashtags, validateHashtag, validateComment} from './check-hashtags-comment.js';
+import {imageUser} from './scale-image.js';
+import {clearClassesImage} from './effect-image.js';
 
 const formDownloadPicture = document.querySelector('.img-upload__form');
 const buttonUploadFile = document.querySelector('#upload-file');
@@ -23,6 +25,8 @@ function closeFormEdit () {
   buttonUploadFile.value = '';
   hashtagsInput.value = '';
   commentInput.value = '';
+  clearClassesImage();
+  imageUser.style.filter = '';
   buttonCloseFormEdit.removeEventListener('click', closeFormEdit);
 }
 
@@ -54,12 +58,9 @@ function checkHashtags (hashtagsString) {
   hashtagsString = hashtagsString.replace(REG_EXP_SPACES, ' ').trim();
   const strToLowerCase = hashtagsString.toLowerCase();
   const hashtags = strToLowerCase.split(' ');
-  if (checkCountHashtags(hashtags)
-    && checkUniqueHashtags(hashtags)
-    && validateHashtag(hashtags)) {
-    return true;
-  }
-  return false;
+  return checkCountHashtags(hashtags)
+  && checkUniqueHashtags(hashtags)
+  && validateHashtag(hashtags);
 }
 
 const pristine = new Pristine(formDownloadPicture, {
