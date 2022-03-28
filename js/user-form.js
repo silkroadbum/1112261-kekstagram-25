@@ -1,8 +1,10 @@
 import {isEscapeKey} from './util.js';
-import {REG_EXP_SPACES} from './const.js';
+import {REG_EXP_SPACES, MAX_VALUE_SCALE, VALUE_ONE_HUNDRED} from './const.js';
 import {checkCountHashtags, checkUniqueHashtags, validateHashtag, validateComment} from './check-hashtags-comment.js';
-import {imageUser} from './scale-image.js';
-import {clearClassesImage} from './effect-image.js';
+import {imageUser, scaleImage} from './scale-image.js';
+import {clearClassesImage, sliderElement, effectImageNone} from './effect-image.js';
+import {sendData} from './api.js';
+import {showAlertSuccesForm, showAlertErrorForm} from './alert-form.js';
 
 const formDownloadPicture = document.querySelector('.img-upload__form');
 const buttonUploadFile = document.querySelector('#upload-file');
@@ -10,6 +12,8 @@ const formEditImage = document.querySelector('.img-upload__overlay');
 const buttonCloseFormEdit = document.querySelector('#upload-cancel');
 const hashtagsInput = formDownloadPicture.querySelector('.text__hashtags');
 const commentInput = formDownloadPicture.querySelector('.text__description');
+const submitButton = formDownloadPicture.querySelector('.img-upload__submit');
+
 
 const onFormEditEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -27,6 +31,10 @@ function closeFormEdit () {
   commentInput.value = '';
   clearClassesImage();
   imageUser.style.filter = '';
+  imageUser.style.transform = `scale(${MAX_VALUE_SCALE / VALUE_ONE_HUNDRED} )`;
+  scaleImage.value = `${MAX_VALUE_SCALE}%`;
+  sliderElement.style.visibility = 'hidden';
+  effectImageNone.checked = true;
   buttonCloseFormEdit.removeEventListener('click', closeFormEdit);
 }
 
@@ -73,9 +81,36 @@ const pristine = new Pristine(formDownloadPicture, {
 pristine.addValidator(hashtagsInput, checkHashtags, 'Hashtag error!');
 pristine.addValidator(commentInput, validateComment, 'Не больше 140 символов!');
 
-formDownloadPicture.addEventListener('submit', (evt) => {
-  const isValid = pristine.validate();
-  if (!isValid) {
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
+const setUserFormSubmit = (onSuccess) => {
+  formDownloadPicture.addEventListener('submit', (evt) => {
     evt.preventDefault();
-  }
-});
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(
+        () => {
+          onSuccess();
+          showAlertSuccesForm();
+          unblockSubmitButton();
+        },
+        () => {
+          onSuccess();
+          showAlertErrorForm();
+          unblockSubmitButton();
+        },
+        new FormData(evt.target)
+      );
+    }
+  });
+};
+
+export {setUserFormSubmit, closeFormEdit};

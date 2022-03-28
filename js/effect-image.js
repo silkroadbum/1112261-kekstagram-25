@@ -3,6 +3,7 @@ import {imageUser} from './scale-image.js';
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderValue = document.querySelector('.effect-level__value');
 const radioButtonsEffect = document.querySelectorAll('.effects__radio');
+const effectImageNone = document.querySelector('#effect-none');
 
 
 const effects = {
@@ -111,4 +112,4 @@ for (const radioButtonEffect of radioButtonsEffect) {
   });
 }
 
-export {clearClassesImage};
+export {clearClassesImage, sliderElement, effectImageNone};

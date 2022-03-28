@@ -2,9 +2,9 @@ import './util.js';
 import './miniature.js';
 import './const.js';
 import './modal.js';
-import './user-form.js';
-import {downloadMiniatures} from './api.js';
+import {closeFormEdit, setUserFormSubmit} from './user-form.js';
+import {getData} from './api.js';
 
-downloadMiniatures();
+getData();
 
-
+setUserFormSubmit(closeFormEdit);
