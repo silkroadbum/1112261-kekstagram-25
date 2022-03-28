@@ -4,7 +4,7 @@ import {checkCountHashtags, checkUniqueHashtags, validateHashtag, validateCommen
 import {imageUser, scaleImage} from './scale-image.js';
 import {clearClassesImage, sliderElement, effectImageNone} from './effect-image.js';
 import {sendData} from './api.js';
-import {showAlertSuccesForm, showAlertErrorForm} from './alert-form.js';
+import {showAlertSuccesForm, showAlertErrorForm, hideAlertSuccesForm, hideAlertErrorForm} from './alert-form.js';
 
 const formDownloadPicture = document.querySelector('.img-upload__form');
 const buttonUploadFile = document.querySelector('#upload-file');
@@ -45,11 +45,11 @@ buttonUploadFile.addEventListener('change', () => {
   buttonCloseFormEdit.addEventListener('click', closeFormEdit);
 });
 
-function addListenerKeydownEsc () {
+function addListenerKeydownEsc() {
   document.addEventListener('keydown', onFormEditEscKeydown);
 }
 
-function removeListenerKeydownEsc () {
+function removeListenerKeydownEsc() {
   document.removeEventListener('keydown', onFormEditEscKeydown);
 }
 
@@ -100,11 +100,13 @@ const setUserFormSubmit = (onSuccess) => {
         () => {
           onSuccess();
           showAlertSuccesForm();
+          hideAlertSuccesForm();
           unblockSubmitButton();
         },
         () => {
           onSuccess();
           showAlertErrorForm();
+          hideAlertErrorForm();
           unblockSubmitButton();
         },
         new FormData(evt.target)
