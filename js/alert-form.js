@@ -49,12 +49,19 @@ const showAlertSuccesForm = () => {
   document.body.appendChild(message);
 };
 
+
 function hideAlertSuccesForm () {
   const buttonHideAlert = document.querySelector('.success__button');
   buttonHideAlert.addEventListener('click', () => {
     hideSuccessAlert();
   });
   addListenerSuccess();
+  const successModal = document.querySelector('.success');
+  successModal.addEventListener('click', (evt) => {
+    if (evt.target.contains(successModal)) {
+      hideSuccessAlert();
+    }
+  });
   setTimeout(() => {
     hideSuccessAlert();
   }, ALERT_SHOW_TIME);
@@ -72,6 +79,12 @@ const hideAlertErrorForm = () => {
     hideErrorAlert();
   });
   addListenerError();
+  const successModal = document.querySelector('.error');
+  successModal.addEventListener('click', (evt) => {
+    if (evt.target.contains(successModal)) {
+      hideErrorAlert();
+    }
+  });
   setTimeout(() => {
     hideErrorAlert();
   }, ALERT_SHOW_TIME);
