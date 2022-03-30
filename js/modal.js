@@ -49,8 +49,6 @@ const showCommentsLoader = (array, value) => {
 const showFullPhoto = (miniature, pictureElement) => {
   miniature.addEventListener('click', () => {
     modalWindow.classList.remove('hidden');
-    // socialCommentCount.classList.add('hidden');
-    // commentLoader.classList.add('hidden');
     document.body.classList.add('modal-open');
     bigPicture.querySelector('img').src = pictureElement.url;
     bigPicture.querySelector('img').alt = pictureElement.description;

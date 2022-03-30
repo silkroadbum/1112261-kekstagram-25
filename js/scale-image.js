@@ -24,4 +24,4 @@ buttonZoomOut.addEventListener('click', () => {
   }
 });
 
-export {imageUser};
+export {imageUser, scaleImage};
