@@ -38,7 +38,7 @@ const getRandomMiniatures = (data) => {
 
 //Функция сортировки массива миниатюр по количеству комментариев от большего к меньшему
 const getDiscussedPhotos = (miniatures) => {
-  fillMainPage(miniatures.sort(compareLikesMiniature));
+  fillMainPage(miniatures.slice().sort(compareLikesMiniature));
 };
 
 //Функция отрисовки массива в зависимости от выбранного фильтра
@@ -65,4 +65,4 @@ const sortMiniatures = (miniatures) => {
   });
 };
 
-export {sortMiniatures};
+export {sortMiniatures, deleteMiniatures};
