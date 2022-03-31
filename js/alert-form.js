@@ -1,8 +1,8 @@
 import {ALERT_SHOW_TIME} from './const.js';
 import {isEscapeKey} from './util.js';
 
-const successTemplate = document.querySelector('#success').content.querySelector('.success');
-const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+const successTemplateElement = document.querySelector('#success').content.querySelector('.success');
+const errorTemplateElement = document.querySelector('#error').content.querySelector('.error');
 
 const onAlertSuccessEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -11,13 +11,13 @@ const onAlertSuccessEscKeydown = (evt) => {
   }
 };
 
-function addListenerSuccess() {
+const addListenerSuccess = () => {
   document.addEventListener('keydown', onAlertSuccessEscKeydown);
-}
+};
 
-function removeListenerSuccess() {
+const removeListenerSuccess = () => {
   document.removeEventListener('keydown', onAlertSuccessEscKeydown);
-}
+};
 
 function hideSuccessAlert() {
   document.querySelector('.success').remove();
@@ -31,26 +31,26 @@ const onAlertErrorEscKeydown = (evt) => {
   }
 };
 
-function addListenerError() {
+const addListenerError = () => {
   document.addEventListener('keydown', onAlertErrorEscKeydown);
-}
+};
 
-function removeListenerError() {
+const removeListenerError = () => {
   document.removeEventListener('keydown', onAlertErrorEscKeydown);
-}
+};
 
 function hideErrorAlert() {
   document.querySelector('.error').remove();
   removeListenerError();
 }
 
-const showAlertSuccesForm = () => {
-  const message = successTemplate.cloneNode(true);
+const showAlertSuccessForm = () => {
+  const message = successTemplateElement.cloneNode(true);
   document.body.appendChild(message);
 };
 
 
-function hideAlertSuccesForm () {
+const hideAlertSuccessForm = () => {
   const buttonHideAlert = document.querySelector('.success__button');
   buttonHideAlert.addEventListener('click', () => {
     hideSuccessAlert();
@@ -65,10 +65,10 @@ function hideAlertSuccesForm () {
   setTimeout(() => {
     hideSuccessAlert();
   }, ALERT_SHOW_TIME);
-}
+};
 
 const showAlertErrorForm = () => {
-  const message = errorTemplate.cloneNode(true);
+  const message = errorTemplateElement.cloneNode(true);
   document.body.appendChild(message);
   addListenerError();
 };
@@ -90,4 +90,4 @@ const hideAlertErrorForm = () => {
   }, ALERT_SHOW_TIME);
 };
 
-export {showAlertSuccesForm, showAlertErrorForm, hideAlertSuccesForm, hideAlertErrorForm};
+export {showAlertSuccessForm, showAlertErrorForm, hideAlertSuccessForm, hideAlertErrorForm};

@@ -1,18 +1,18 @@
 import {isEscapeKey} from './util.js';
 import {REG_EXP_SPACES, MAX_VALUE_SCALE, VALUE_ONE_HUNDRED} from './const.js';
 import {checkCountHashtags, checkUniqueHashtags, validateHashtag, validateComment} from './check-hashtags-comment.js';
-import {imageUser, scaleImage} from './scale-image.js';
-import {clearClassesImage, sliderElement, effectImageNone} from './effect-image.js';
+import {imageUserElement, scaleImageElement} from './scale-image.js';
+import {clearClassesImage, sliderElement, effectImageNoneElement} from './effect-image.js';
 import {sendData} from './api.js';
-import {showAlertSuccesForm, showAlertErrorForm, hideAlertSuccesForm, hideAlertErrorForm} from './alert-form.js';
+import {showAlertSuccessForm, showAlertErrorForm, hideAlertSuccessForm, hideAlertErrorForm} from './alert-form.js';
 
-const formDownloadPicture = document.querySelector('.img-upload__form');
-const buttonUploadFile = document.querySelector('#upload-file');
-const formEditImage = document.querySelector('.img-upload__overlay');
-const buttonCloseFormEdit = document.querySelector('#upload-cancel');
-const hashtagsInput = formDownloadPicture.querySelector('.text__hashtags');
-const commentInput = formDownloadPicture.querySelector('.text__description');
-const submitButton = formDownloadPicture.querySelector('.img-upload__submit');
+const formDownloadPictureElement = document.querySelector('.img-upload__form');
+const buttonUploadFileElement = document.querySelector('#upload-file');
+const formEditImageElement = document.querySelector('.img-upload__overlay');
+const buttonCloseFormElement = document.querySelector('#upload-cancel');
+const hashtagsInputElement = formDownloadPictureElement.querySelector('.text__hashtags');
+const commentInputElement = formDownloadPictureElement.querySelector('.text__description');
+const submitButtonElement = formDownloadPictureElement.querySelector('.img-upload__submit');
 
 
 const onFormEditEscKeydown = (evt) => {
@@ -23,26 +23,26 @@ const onFormEditEscKeydown = (evt) => {
 };
 
 function closeFormEdit () {
-  formEditImage.classList.add('hidden');
+  formEditImageElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
   removeListenerKeydownEsc();
-  buttonUploadFile.value = '';
-  hashtagsInput.value = '';
-  commentInput.value = '';
+  buttonUploadFileElement.value = '';
+  hashtagsInputElement.value = '';
+  commentInputElement.value = '';
   clearClassesImage();
-  imageUser.style.filter = '';
-  imageUser.style.transform = `scale(${MAX_VALUE_SCALE / VALUE_ONE_HUNDRED} )`;
-  scaleImage.value = `${MAX_VALUE_SCALE}%`;
+  imageUserElement.style.filter = '';
+  imageUserElement.style.transform = `scale(${MAX_VALUE_SCALE / VALUE_ONE_HUNDRED} )`;
+  scaleImageElement.value = `${MAX_VALUE_SCALE}%`;
   sliderElement.style.visibility = 'hidden';
-  effectImageNone.checked = true;
-  buttonCloseFormEdit.removeEventListener('click', closeFormEdit);
+  effectImageNoneElement.checked = true;
+  buttonCloseFormElement.removeEventListener('click', closeFormEdit);
 }
 
-buttonUploadFile.addEventListener('change', () => {
-  formEditImage.classList.remove('hidden');
+buttonUploadFileElement.addEventListener('change', () => {
+  formEditImageElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
   addListenerKeydownEsc();
-  buttonCloseFormEdit.addEventListener('click', closeFormEdit);
+  buttonCloseFormElement.addEventListener('click', closeFormEdit);
 });
 
 function addListenerKeydownEsc() {
@@ -53,13 +53,13 @@ function removeListenerKeydownEsc() {
   document.removeEventListener('keydown', onFormEditEscKeydown);
 }
 
-hashtagsInput.addEventListener('focus', removeListenerKeydownEsc);
-hashtagsInput.addEventListener('blur', addListenerKeydownEsc);
+hashtagsInputElement.addEventListener('focus', removeListenerKeydownEsc);
+hashtagsInputElement.addEventListener('blur', addListenerKeydownEsc);
 
-commentInput.addEventListener('focus', removeListenerKeydownEsc);
-commentInput.addEventListener('blur', addListenerKeydownEsc);
+commentInputElement.addEventListener('focus', removeListenerKeydownEsc);
+commentInputElement.addEventListener('blur', addListenerKeydownEsc);
 
-function checkHashtags (hashtagsString) {
+const checkHashtags = (hashtagsString) => {
   if (!hashtagsString) {
     return true;
   }
@@ -69,28 +69,28 @@ function checkHashtags (hashtagsString) {
   return checkCountHashtags(hashtags)
   && checkUniqueHashtags(hashtags)
   && validateHashtag(hashtags);
-}
+};
 
-const pristine = new Pristine(formDownloadPicture, {
+const pristine = new Pristine(formDownloadPictureElement, {
   classTo: 'validate__item',
   errorTextParent: 'validate__item',
   errorTextTag: 'div',
   errorTextClass: 'form__error'
 });
 
-pristine.addValidator(hashtagsInput, checkHashtags, 'Hashtag error!');
-pristine.addValidator(commentInput, validateComment, 'Не больше 140 символов!');
+pristine.addValidator(hashtagsInputElement, checkHashtags, 'Hashtag error!');
+pristine.addValidator(commentInputElement, validateComment, 'Не больше 140 символов!');
 
 const blockSubmitButton = () => {
-  submitButton.disabled = true;
+  submitButtonElement.disabled = true;
 };
 
 const unblockSubmitButton = () => {
-  submitButton.disabled = false;
+  submitButtonElement.disabled = false;
 };
 
 const setUserFormSubmit = (onSuccess) => {
-  formDownloadPicture.addEventListener('submit', (evt) => {
+  formDownloadPictureElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     const isValid = pristine.validate();
@@ -99,8 +99,8 @@ const setUserFormSubmit = (onSuccess) => {
       sendData(
         () => {
           onSuccess();
-          showAlertSuccesForm();
-          hideAlertSuccesForm();
+          showAlertSuccessForm();
+          hideAlertSuccessForm();
           unblockSubmitButton();
         },
         () => {

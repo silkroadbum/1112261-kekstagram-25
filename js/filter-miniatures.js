@@ -3,8 +3,8 @@ import {ACTIVE_CLASS_FILTER_BUTTON, RERENDER_DELAY} from './const.js';
 import {fillMainPage} from './miniature.js';
 
 
-const filtersForm = document.querySelector('.img-filters__form');
-const filterButtons = document.querySelectorAll('.img-filters__button');
+const filtersFormElement = document.querySelector('.img-filters__form');
+const filterButtonsElement = document.querySelectorAll('.img-filters__button');
 
 
 //Функция для передачи в функцию сортировки
@@ -16,8 +16,8 @@ const compareLikesMiniature = (miniatureA, miniatureB) => {
 
 //Функция удаления всех миниатюр со страницы
 const deleteMiniatures = () => {
-  const miniatures = document.querySelectorAll('.picture');
-  miniatures.forEach((picture) => picture.remove());
+  const miniaturesElement = document.querySelectorAll('.picture');
+  miniaturesElement.forEach((picture) => picture.remove());
 };
 
 //Функция получения 10 рандомных миниатюр
@@ -59,10 +59,10 @@ const onFilterChange = (filterId, miniatures) => {
 const sortMiniatures = (miniatures) => {
   const handleChange = debounce((evt) => onFilterChange(evt.target.id, miniatures), RERENDER_DELAY);
 
-  filtersForm.addEventListener('click', (evt) => {
-    toggleClassActive(filterButtons, evt, ACTIVE_CLASS_FILTER_BUTTON);
+  filtersFormElement.addEventListener('click', (evt) => {
+    toggleClassActive(filterButtonsElement, evt, ACTIVE_CLASS_FILTER_BUTTON);
     handleChange(evt);
   });
 };
 
-export {sortMiniatures, deleteMiniatures};
+export {sortMiniatures};

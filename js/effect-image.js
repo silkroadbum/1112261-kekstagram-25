@@ -1,10 +1,9 @@
-import {imageUser} from './scale-image.js';
+import {imageUserElement} from './scale-image.js';
 
 const sliderElement = document.querySelector('.effect-level__slider');
-const sliderValue = document.querySelector('.effect-level__value');
-const radioButtonsEffect = document.querySelectorAll('.effects__radio');
-const effectImageNone = document.querySelector('#effect-none');
-
+const sliderValueElement = document.querySelector('.effect-level__value');
+const buttonsEffectElement = document.querySelectorAll('.effects__radio');
+const effectImageNoneElement = document.querySelector('#effect-none');
 
 const effects = {
   'chrome' : {
@@ -56,7 +55,7 @@ const effects = {
 
 const clearClassesImage = () => {
   for (const element in effects) {
-    imageUser.classList.remove(effects[element].class);
+    imageUserElement.classList.remove(effects[element].class);
   }
 };
 
@@ -82,16 +81,16 @@ noUiSlider.create(sliderElement, {
 });
 
 sliderElement.style.visibility = 'hidden';
-sliderValue.value = '';
+sliderValueElement.value = '';
 
-for (const radioButtonEffect of radioButtonsEffect) {
+for (const radioButtonEffect of buttonsEffectElement) {
   radioButtonEffect.addEventListener('change', (evt) => {
     clearClassesImage();
     if (evt.target.checked) {
       if (evt.target.value === 'none') {
         sliderElement.style.visibility = 'hidden';
-        sliderValue.value = '';
-        imageUser.style.filter = '';
+        sliderValueElement.value = '';
+        imageUserElement.style.filter = '';
       } else {
         sliderElement.style.visibility = 'visible';
         sliderElement.noUiSlider.updateOptions({
@@ -102,14 +101,14 @@ for (const radioButtonEffect of radioButtonsEffect) {
           start: effects[radioButtonEffect.value].start,
           step: effects[radioButtonEffect.value].step
         });
-        imageUser.classList.add(effects[radioButtonEffect.value].class);
+        imageUserElement.classList.add(effects[radioButtonEffect.value].class);
         sliderElement.noUiSlider.on('update', () => {
-          sliderValue.value = sliderElement.noUiSlider.get();
-          imageUser.style.filter = `${effects[radioButtonEffect.value].filter}(${sliderValue.value}${effects[radioButtonEffect.value].unit})`;
+          sliderValueElement.value = sliderElement.noUiSlider.get();
+          imageUserElement.style.filter = `${effects[radioButtonEffect.value].filter}(${sliderValueElement.value}${effects[radioButtonEffect.value].unit})`;
         });
       }
     }
   });
 }
 
-export {clearClassesImage, sliderElement, effectImageNone};
+export {clearClassesImage, sliderElement, effectImageNoneElement};
