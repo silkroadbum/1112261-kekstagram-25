@@ -3,9 +3,6 @@ import {ALERT_SHOW_TIME} from './const.js';
 // Функция, возвращающая случайное целое число из переданного диапазона включительно
 const getRandomInteger = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
 
-//Функция получения рандомного элемента из массива
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
 //Функция создания элемента с необходимым классом
 const makeElement = (tagName, className) => {
   const element = document.createElement(tagName);
@@ -50,4 +47,4 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-export {getRandomInteger, getRandomArrayElement, makeElement, isEscapeKey, isEnterKey, showAlert, debounce, toggleClassActive};
+export {getRandomInteger, makeElement, isEscapeKey, isEnterKey, showAlert, debounce, toggleClassActive};

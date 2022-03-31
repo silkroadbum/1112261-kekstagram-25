@@ -9,7 +9,6 @@ import {getData} from './api.js';
 getData((pictures)=> {
   fillMainPage(pictures);
   sortMiniatures(pictures);
-  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 });
 
 setUserFormSubmit(closeFormEdit);
