@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import {REG_EXP_SPACES, MAX_VALUE_SCALE, VALUE_ONE_HUNDRED} from './const.js';
+import {REG_EXP_SPACES, MAX_VALUE_SCALE, VALUE_ONE_HUNDRED, FILE_TYPES} from './const.js';
 import {checkCountHashtags, checkUniqueHashtags, validateHashtag, validateComment} from './check-hashtags-comment.js';
 import {imageUserElement, scaleImageElement} from './scale-image.js';
 import {clearClassesImage, sliderElement, effectImageNoneElement} from './effect-image.js';
@@ -39,6 +39,15 @@ function closeFormEdit () {
 }
 
 buttonUploadFileElement.addEventListener('change', () => {
+  const file = buttonUploadFileElement.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    imageUserElement.src = URL.createObjectURL(file);
+  }
+
   formEditImageElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
   addListenerKeydownEsc();
@@ -115,4 +124,4 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-export {setUserFormSubmit, closeFormEdit};
+export {setUserFormSubmit, closeFormEdit, buttonUploadFileElement};

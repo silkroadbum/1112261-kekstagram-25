@@ -7,7 +7,6 @@ import {closeFormEdit, setUserFormSubmit} from './user-form.js';
 import {getData} from './api.js';
 
 getData((pictures)=> {
-  console.log(pictures);
   fillMainPage(pictures);
   sortMiniatures(pictures);
 });
