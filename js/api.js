@@ -1,8 +1,7 @@
 import {showAlert} from './util.js';
-import {fillMainPage} from './miniature.js';
 import {MESSAGE_DOWNLOAD_MINIATURES, URL_MINIATURES, URL_SUBMIT_FORM} from './const.js';
 
-const getData = () => {
+const getData = (onSuccess) => {
   fetch(URL_MINIATURES)
     .then((response) => {
       if (response.ok) {
@@ -10,7 +9,7 @@ const getData = () => {
       }
     })
     .then((pictures) => {
-      fillMainPage(pictures);
+      onSuccess(pictures);
     }).catch(() => {
       showAlert(MESSAGE_DOWNLOAD_MINIATURES);
     });

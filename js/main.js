@@ -1,10 +1,15 @@
 import './util.js';
-import './miniature.js';
+import {fillMainPage} from './miniature.js';
+import {sortMiniatures} from './filter-miniatures.js';
 import './const.js';
 import './modal.js';
 import {closeFormEdit, setUserFormSubmit} from './user-form.js';
 import {getData} from './api.js';
 
-getData();
+getData((pictures)=> {
+  fillMainPage(pictures);
+  sortMiniatures(pictures);
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+});
 
 setUserFormSubmit(closeFormEdit);

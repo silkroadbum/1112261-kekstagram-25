@@ -31,4 +31,23 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getRandomInteger, getRandomArrayElement, makeElement, isEscapeKey, isEnterKey, showAlert};
+// Функция меняющая активный класс у кнопок
+const toggleClassActive = (buttons, evt, activeClass) => {
+  buttons.forEach((button)=> {
+    button.classList.remove(activeClass);
+  });
+  if (evt.target) {
+    evt.target.classList.add(activeClass);
+  }
+};
+
+//Функция устранения дребезга
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomInteger, getRandomArrayElement, makeElement, isEscapeKey, isEnterKey, showAlert, debounce, toggleClassActive};
