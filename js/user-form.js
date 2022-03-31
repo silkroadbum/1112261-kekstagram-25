@@ -22,6 +22,14 @@ const onFormEditEscKeydown = (evt) => {
   }
 };
 
+const addListenerKeydownEsc = () => {
+  document.addEventListener('keydown', onFormEditEscKeydown);
+};
+
+const removeListenerKeydownEsc = () => {
+  document.removeEventListener('keydown', onFormEditEscKeydown);
+};
+
 function closeFormEdit () {
   formEditImageElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -53,14 +61,6 @@ buttonUploadFileElement.addEventListener('change', () => {
   addListenerKeydownEsc();
   buttonCloseFormElement.addEventListener('click', closeFormEdit);
 });
-
-function addListenerKeydownEsc() {
-  document.addEventListener('keydown', onFormEditEscKeydown);
-}
-
-function removeListenerKeydownEsc() {
-  document.removeEventListener('keydown', onFormEditEscKeydown);
-}
 
 hashtagsInputElement.addEventListener('focus', removeListenerKeydownEsc);
 hashtagsInputElement.addEventListener('blur', addListenerKeydownEsc);
